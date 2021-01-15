@@ -3,7 +3,7 @@
     <el-header>
       <Header />
     </el-header>
-    <el-container class="layout-container">
+    <el-container>
       <el-aside width="200px">
         <Navtion />
       </el-aside>

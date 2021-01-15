@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-card">
-      <h1 class="login-header">login</h1>
+      <h1 class="login-header">Login</h1>
       <div class="login-form">
         <el-form :model="form" ref="form" :rules="rules">
           <el-form-item prop="name">
@@ -9,7 +9,9 @@
               v-model="form.name"
               placeholder="请输入账号"
               @keyup.enter.native="login"
-            ></el-input>
+            >
+              <i slot="prefix" class="el-input__icon el-icon-user"></i>
+            </el-input>
           </el-form-item>
           <el-form-item prop="pwd">
             <el-input
@@ -17,10 +19,18 @@
               placeholder="请输入密码"
               show-password
               @keyup.enter.native="login"
-            ></el-input>
+            >
+              <i slot="prefix" class="el-input__icon el-icon-key"></i>
+            </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="login">登 录</el-button>
+            <el-button
+              type="primary"
+              class="w-100"
+              :loading="loading"
+              @click="login"
+              >登 录</el-button
+            >
           </el-form-item>
         </el-form>
       </div>
@@ -36,6 +46,7 @@ export default {
   name: "Login",
   data() {
     return {
+      loading: false,
       form: {
         name: "",
         pwd: "",
@@ -53,15 +64,20 @@ export default {
     }),
     login() {
       this.$refs["form"].validate((valid) => {
-        if (valid) {
-          login(this.form).then((res) => {
+        if (!valid) return;
+        this.loading = true;
+        login(this.form)
+          .then((res) => {
+            this.loading = false;
             if (res.code == 0) {
               this.setToken(res.data.jwtToken);
               this.setUser(res.data.user);
               this.$router.push({ name: "Home" });
             }
+          })
+          .catch(() => {
+            this.loading = false;
           });
-        }
       });
     },
   },
@@ -82,7 +98,7 @@ export default {
 }
 
 .login-card {
-  width: 480px;
+  width: 380px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;

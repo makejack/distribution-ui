@@ -46,6 +46,18 @@ const routes = [
       name: 'ShipmentInfo',
       component: () => import(/* webpackChunkName: "shipmentinfo" */ '../views/ShipmentInfo.vue')
     }, {
+      path: '/billing',
+      name: 'BillingList',
+      component: () => import(/* webpackChunkName: "billinglist" */ '../views/BillingList.vue')
+    }, {
+      path: '/refund',
+      name: 'RefundList',
+      component: () => import(/* webkpackChunkName: "refundlist" */ '../views/RefundList.vue')
+    }, {
+      path: '/refund/:id',
+      name: 'Refund',
+      component: () => import(/* webpackChunkName: "refund" */ '../views/Refund.vue')
+    }, {
       path: '/customer',
       name: 'Customer',
       component: () => import(/* webpackChunkName: "customer" */ '../views/Customer.vue')
@@ -97,6 +109,10 @@ const routes = [
       path: '/employee',
       name: 'EmployeeList',
       component: () => import(/* webpackChunkName: "employee" */ '../views/Employee.vue')
+    }, {
+      path: '/address',
+      name: 'AddressList',
+      component: () => import(/* webkpackChunkName: "addresslist" */ '../views/AddressList.vue')
     }]
   }, {
     path: '/login',
@@ -104,7 +120,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
   }, {
     path: '*',
-    name: '404',
     component: () => import(/* webpackChunkName: "404" */ '../views/404.vue')
   }
 ]

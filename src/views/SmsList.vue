@@ -34,6 +34,7 @@
 
 <script>
 import { smsList } from "../api/smsLog";
+import { formatDatetime } from "../utils/format";
 
 export default {
   name: "SmsList",
@@ -50,15 +51,15 @@ export default {
   },
   methods: {
     formatDate(row, column, cellValue) {
-      return this.$moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
+      return formatDatetime(cellValue);
     },
     sizeChange(val) {
       this.pagination.limit = val;
-      this.loadLog();
+      this.loadSms();
     },
     currentChange(val) {
       this.pagination.page = val;
-      this.loadLog();
+      this.loadSms();
     },
     loadSms() {
       this.loading = true;

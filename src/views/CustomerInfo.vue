@@ -29,10 +29,10 @@
             <el-input v-model="form.city" readonly></el-input>
           </el-form-item>
           <el-form-item label="角色" prop="role">
-            <el-input :value="formatRole()" readonly></el-input>
+            <el-input :value="formatRole(form.role)" readonly></el-input>
           </el-form-item>
           <el-form-item label="创建时间" prop="createat">
-            <el-input :value="formatDate(form.createat)" readonly></el-input>
+            <el-input :value="formatDatetime(form.createat)" readonly></el-input>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -88,7 +88,7 @@ import OrderTable from "../components/OrderTable";
 import WithdrawalTable from "../components/WithdrawalTable";
 import CommissionTable from "../components/CommissionTable";
 import { customerGet } from "../api/customer";
-import { formatRole } from "../utils/format";
+import { formatRole,formatDatetime } from "../utils/format";
 
 export default {
   name: "CustomerInfo",
@@ -108,12 +108,8 @@ export default {
     };
   },
   methods: {
-    formatRole() {
-      return formatRole(this.form.role);
-    },
-    formatDate(value) {
-      return this.$moment(value).format("YYYY-MM-DD HH:mm:ss");
-    },
+    formatRole,
+    formatDatetime,
     formatAmount(value) {
       return value / 100;
     },

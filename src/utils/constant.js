@@ -17,6 +17,10 @@ export const paymentType = [{
 
 export const paymentMethod = [{
     id: 0, text: '微信支付'
+}, {
+    id: 1, text: '支付宝支付'
+}, {
+    id: 2, text: 'POS'
 }]
 
 export const orderStatus = [{
@@ -33,6 +37,8 @@ export const orderStatus = [{
 
 export const shippingStatus = [{
     id: 0, text: '暂存'
+}, {
+    id: 1, text: '退还商品'
 }, {
     id: 100, text: '等待发货'
 }, {
@@ -57,6 +63,20 @@ export const employeeRoles = [{
     id: 2, text: '开发人员'
 }, {
     id: 3, text: '售后人员'
+}]
+
+export const refundStatus = [{
+    id: 0, text: '无'
+}, {
+    id: 1, text: '申请失败'
+}, {
+    id: 2, text: '退货申请'
+}, {
+    id: 3, text: '同意退款申请'
+}, {
+    id: 4, text: '退还商品'
+}, {
+    id: 5, text: '完成退货'
 }]
 
 export const courierCompanys = [

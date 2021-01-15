@@ -39,7 +39,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="创建时间" prop="createat">
-          <el-input :value="formtDate(form.createat)"></el-input>
+          <el-input :value="formatDatetime(form.createat)"></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -48,6 +48,7 @@
 
 <script>
 import { logGet } from "../api/requestResponseLog";
+import { formatDatetime } from "../utils/format";
 
 export default {
   name: "Log",
@@ -59,9 +60,7 @@ export default {
     };
   },
   methods: {
-    formtDate(value) {
-      return this.$moment(value).format("YYYY-MM-DD HH:mm:ss");
-    },
+    formatDatetime,
     returnList() {
       this.$router.push({ name: "LogList" });
     },

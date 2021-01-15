@@ -99,7 +99,7 @@
 <script>
 import { shipmentList, shipmentDelete } from "../api/shipment";
 import { shippingStatus } from "../utils/constant";
-import { formatShippingStatus } from "../utils/format";
+import { formatShippingStatus, formatDatetime } from "../utils/format";
 
 export default {
   name: "Shipment",
@@ -120,16 +120,15 @@ export default {
       return formatShippingStatus(cellValue);
     },
     formatCreateDate(row, column, cellValue) {
-      if (cellValue)
-        return this.$moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
+      return formatDatetime(cellValue);
     },
     sizeChange(val) {
       this.pagination.limit = val;
-      this.loadOrderList();
+      this.loadShipmentList();
     },
     currentChange(val) {
       this.pagination.page = val;
-      this.loadOrderList();
+      this.loadShipmentList();
     },
     searchHandler() {
       this.pagination.page = 1;

@@ -68,7 +68,7 @@
         prop="paymentTime"
         :formatter="formatTableeDate"
       ></el-table-column>
-      <el-table-column label="备注" prop="remarks"></el-table-column>
+      <!-- <el-table-column label="备注" prop="remarks"></el-table-column> -->
       <el-table-column
         label="创建时间"
         prop="createat"
@@ -110,6 +110,7 @@ import {
   formatPaymentType,
   formatPaymentMethod,
   formatOrderStatus,
+  formatDatetime,
 } from "../utils/format";
 
 export default {
@@ -147,8 +148,7 @@ export default {
       return value / 100;
     },
     formatTableeDate(row, column, cellValue) {
-      if (cellValue)
-        return this.$moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
+      return formatDatetime(cellValue);
     },
     formatTableAmount(row, column, cellValue) {
       return this.formatAmount(cellValue);

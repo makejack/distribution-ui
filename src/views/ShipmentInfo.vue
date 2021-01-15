@@ -41,13 +41,13 @@
           </el-form-item>
           <el-form-item label="申请/发货时间" prop="shippingTime">
             <el-input
-              :value="formatDate(shipment.shippingTime)"
+              :value="formatDatetime(shipment.shippingTime)"
               readonly
             ></el-input>
           </el-form-item>
           <el-form-item label="完成时间" prop="completeTime">
             <el-input
-              :value="formatDate(shipment.completeTime)"
+              :value="formatDatetime(shipment.completeTime)"
               readonly
             ></el-input>
           </el-form-item>
@@ -56,7 +56,7 @@
           </el-form-item>
           <el-form-item label="创建时间" prop="createat">
             <el-input
-              :value="formatDate(shipment.createat)"
+              :value="formatDatetime(shipment.createat)"
               readonly
             ></el-input>
           </el-form-item>
@@ -157,7 +157,7 @@
             class="w-100"
           >
             <el-option
-              v-for="(item, index) in getGourierCompanys()"
+              v-for="(item, index) in courierCompanys"
               :key="index"
               :label="item.name"
               :value="item.key"
@@ -188,12 +188,13 @@
 import { shipmentGet, shipmentSetTrackingNumber } from "../api/shipment";
 import { trackingNumberQuery } from "../api/shipping";
 import { courierCompanys } from "../utils/constant";
-import { formatShippingStatus } from "../utils/format";
+import { formatShippingStatus, formatDatetime } from "../utils/format";
 
 export default {
   name: "ShipmentInfo",
   data() {
     return {
+      courierCompanys,
       shipmentId: 0,
       loading: false,
       activeName: "base",
@@ -216,20 +217,13 @@ export default {
     };
   },
   methods: {
+    formatShippingStatus,
+    formatDatetime,
     formatTableAmount(row, column, cellValue) {
       return cellValue / 100;
     },
     formatCreateDate(row, column, cellValue) {
-      return this.formatDate(cellValue);
-    },
-    formatDate(value) {
-      if (value) return this.$moment(value).format("YYYY-MM-DD HH:mm:ss");
-    },
-    formatShippingStatus(value) {
-      return formatShippingStatus(value);
-    },
-    getGourierCompanys() {
-      return courierCompanys;
+      return formatDatetime(cellValue);
     },
     returnShipmentHandler() {
       this.$router.push({ name: "Shipment" });

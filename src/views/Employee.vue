@@ -52,7 +52,11 @@
     >
       <el-form :model="form" ref="form" :rules="rules" label-width="120px">
         <el-form-item label="账号" prop="name">
-          <el-input v-model="form.name" placeholder="账号"></el-input>
+          <el-input
+            v-model="form.name"
+            placeholder="账号"
+            :readonly="form.id !== 0"
+          ></el-input>
         </el-form-item>
         <el-form-item label="昵称" prop="nickName">
           <el-input v-model="form.nickName" placeholder="昵称"></el-input>
@@ -67,7 +71,7 @@
         <el-form-item label="角色" prop="role">
           <el-select v-model="form.role" placeholder="请选择角色">
             <el-option
-              v-for="(item, index) in getEmployeeRoles()"
+              v-for="(item, index) in employeeRoles"
               :key="index"
               :label="item.text"
               :value="item.id"
@@ -102,6 +106,7 @@ export default {
   name: "Employee",
   data() {
     return {
+      employeeRoles,
       tableLoading: false,
       tableData: [],
       totalRows: 0,
@@ -211,9 +216,6 @@ export default {
         .catch(() => {
           this.tableLoading = false;
         });
-    },
-    getEmployeeRoles() {
-      return employeeRoles;
     },
     handleClosed() {
       this.$refs.form.resetFields();

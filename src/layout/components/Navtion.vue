@@ -7,7 +7,7 @@
     <el-submenu index="1">
       <template slot="title">
         <i class="el-icon-goods"></i>
-        <span>商品</span>
+        <span>商品管理</span>
       </template>
       <el-menu-item index="/goods">
         <span slot="title">商品列表</span>
@@ -21,23 +21,23 @@
         <i class="el-icon-shopping-cart-full"></i>
         <span>销售管理</span>
       </template>
+      <el-menu-item index="/customer">
+        <span slot="title">人员</span>
+      </el-menu-item>
       <el-menu-item index="/order">
         <span slot="title">订单</span>
       </el-menu-item>
       <el-menu-item index="/shipment">
         <span slot="title">装货</span>
       </el-menu-item>
-    </el-submenu>
-    <el-submenu index="3">
-      <template slot="title">
-        <i class="el-icon-user"></i>
-        <span>顾客管理</span>
-      </template>
-      <el-menu-item index="/customer">
-        <span slot="title">顾客</span>
+      <el-menu-item index="/refund">
+        <span slot="title">退款</span>
+      </el-menu-item>
+      <el-menu-item index="/billing">
+        <span slot="title">票据</span>
       </el-menu-item>
     </el-submenu>
-    <el-submenu index="4">
+    <el-submenu index="3">
       <template slot="title">
         <i class="el-icon-tickets"></i>
         <span>记录管理</span>
@@ -49,7 +49,7 @@
         <span slot="title">佣金</span>
       </el-menu-item>
     </el-submenu>
-    <el-submenu index="5">
+    <el-submenu index="4">
       <template slot="title">
         <i class="el-icon-setting"></i>
         <span>设置</span>
@@ -58,13 +58,16 @@
         <span slot="title">合伙人</span>
       </el-menu-item>
     </el-submenu>
-    <el-submenu index="6">
+    <el-submenu index="5">
       <template slot="title">
         <i class="el-icon-set-up"></i>
         <span>系统</span>
       </template>
       <el-menu-item index="/employee">
         <span slot="title">员工管理</span>
+      </el-menu-item>
+      <el-menu-item index="/address">
+        <span slot="title">地址管理</span>
       </el-menu-item>
       <el-menu-item index="/log/error">
         <span slot="title">错误日志</span>

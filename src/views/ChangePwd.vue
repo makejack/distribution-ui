@@ -44,7 +44,15 @@ export default {
       },
       rules: {
         oldPwd: [{ required: true, message: "请输入旧密码", trigger: "blur" }],
-        newPwd: [{ required: true, message: "请输入新密码", trigger: "blur" }],
+        newPwd: [
+          { required: true, message: "请输入新密码", trigger: "blur" },
+          {
+            min: 6,
+            max: 32,
+            message: "密码长度不正确 6-32",
+            trigger: "blur",
+          },
+        ],
         confirmPwd: [
           { required: true, message: "请输入确认密码", trigger: "blur" },
           { validator: checkConfirmPwd, trigger: "blur" },

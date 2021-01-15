@@ -64,6 +64,7 @@
 
 <script>
 import { withdrawalList } from "../api/withdrawal";
+import { formatDatetime } from "../utils/format";
 
 export default {
   name: "Withdrawal",
@@ -92,8 +93,7 @@ export default {
       return this.formatAmount(cellValue);
     },
     formatTableeDate(row, column, cellValue) {
-      if (cellValue)
-        return this.$moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
+      return formatDatetime(cellValue);
     },
     sizeChange(val) {
       this.pagination.limit = val;

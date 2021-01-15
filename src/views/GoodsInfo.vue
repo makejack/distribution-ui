@@ -6,7 +6,7 @@
         <el-button type="primary" @click="saveGoodsHandler" :loading="disabled"
           >保存</el-button
         >
-        <el-button type="default" @click="returnGoodsList">返回</el-button>
+        <el-button @click="returnGoodsList">返回</el-button>
       </div>
     </div>
     <el-tabs v-model="activeName">

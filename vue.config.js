@@ -15,5 +15,10 @@ module.exports = {
                 }
             }
         }
+    },
+    chainWebpack: config => {
+        //移除Proload和Prefetch来实现懒加载
+        config.plugins.delete('preload')
+        config.plugins.delete('prefetch')
     }
 }

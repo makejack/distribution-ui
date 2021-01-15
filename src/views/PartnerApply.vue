@@ -20,7 +20,7 @@
             placeholder="合伙人角色"
           >
             <el-option
-              v-for="item in getPartnerRoles()"
+              v-for="item in roles"
               :key="item.id"
               :label="item.text"
               :value="item.id"
@@ -84,12 +84,17 @@
 <script>
 import { applyList, applyDelete } from "../api/partnerApply";
 import { roles } from "../utils/constant";
-import { formatRole, formatPartnerApplyTypes } from "../utils/format";
+import {
+  formatRole,
+  formatPartnerApplyTypes,
+  formatDatetime,
+} from "../utils/format";
 
 export default {
   name: "PartnerApply",
   data() {
     return {
+      roles,
       tableLoading: false,
       tableData: [],
       totalRows: 0,
@@ -101,9 +106,6 @@ export default {
     };
   },
   methods: {
-    getPartnerRoles() {
-      return roles;
-    },
     formatPartnerRole(row, column, cellValue) {
       return formatRole(cellValue);
     },
@@ -111,7 +113,7 @@ export default {
       return formatPartnerApplyTypes(cellValue);
     },
     formatTableeDate(row, column, cellValue) {
-      return this.$moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
+      return formatDatetime(cellValue);
     },
     sizeChange(val) {
       this.pagination.limit = val;

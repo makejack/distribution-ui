@@ -19,7 +19,7 @@
         <el-form-item label="角色" prop="role">
           <el-select v-model="pagination.role" clearable>
             <el-option
-              v-for="(item, index) in getRoles()"
+              v-for="(item, index) in roles"
               :key="index"
               :label="item.text"
               :value="item.id"
@@ -82,7 +82,7 @@
 <script>
 import { customerList } from "../api/customer";
 import { roles } from "../utils/constant";
-import { formatRole } from "../utils/format";
+import { formatRole, formatDatetime } from "../utils/format";
 
 export default {
   name: "Customer",
@@ -98,17 +98,15 @@ export default {
         name: "",
         role: null,
       },
+      roles,
     };
   },
   methods: {
     formatDate(row, column, cellValue) {
-      return this.$moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
+      return formatDatetime(cellValue);
     },
     formatRole(row, column, cellValue) {
       return formatRole(cellValue);
-    },
-    getRoles() {
-      return roles;
     },
     sizeChange(val) {
       this.pagination.limit = val;

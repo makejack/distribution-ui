@@ -86,6 +86,7 @@
 
 <script>
 import { goodsList, goodsDelete } from "../api/goods";
+import { formatDate } from "../utils/format";
 
 export default {
   name: "Goods",
@@ -107,7 +108,7 @@ export default {
       return row.price / 100;
     },
     dateFormat(row) {
-      return this.$moment(row.createat).format("YYYY-MM-DD");
+      return formatDate(row.createat);
     },
     sizeChange(val) {
       this.pagination.limit = val;

@@ -18,7 +18,7 @@
         <el-form-item label="合伙人角色" prop="partnerRole">
           <el-select v-model="form.partnerRole">
             <el-option
-              v-for="(item, index) in getPartnerRoles()"
+              v-for="(item, index) in roles"
               :key="index"
               :label="item.text"
               :value="item.id"
@@ -28,7 +28,7 @@
         <el-form-item label="申请类型" prop="applyType">
           <el-select v-model="form.applyType">
             <el-option
-              v-for="(item, index) in getPartnerApplyTypes()"
+              v-for="(item, index) in partnerApplyTypes"
               :key="index"
               :label="item.text"
               :value="item.id"
@@ -75,8 +75,9 @@
               <template slot-scope="scope">
                 <el-button
                   type="danger"
-                  icon="el-icon-delete"
+                  icon="el-icon-close"
                   circle
+                  size="mini"
                   @click="removeGoodsHandle(scope.row)"
                 ></el-button
               ></template>
@@ -121,6 +122,8 @@ export default {
       }
     };
     return {
+      roles,
+      partnerApplyTypes,
       id: 0,
       loading: false,
       dialogTableVisible: false,
@@ -154,12 +157,6 @@ export default {
     };
   },
   methods: {
-    getPartnerRoles() {
-      return roles;
-    },
-    getPartnerApplyTypes() {
-      return partnerApplyTypes;
-    },
     formatPrice(row, column, cellValue) {
       return cellValue / 100;
     },

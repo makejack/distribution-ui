@@ -17,7 +17,7 @@
             placeholder="佣金状态"
           >
             <el-option
-              v-for="item in getCommissionStatus()"
+              v-for="item in commissionStatus"
               :key="item.id"
               :label="item.text"
               :value="item.id"
@@ -89,7 +89,7 @@
 <script>
 import { commissionList } from "../api/commission";
 import { commissionStatus } from "../utils/constant";
-import { formatCommissionStatus } from "../utils/format";
+import { formatCommissionStatus, formatDatetime } from "../utils/format";
 
 export default {
   name: "Commission",
@@ -103,6 +103,7 @@ export default {
         limit: 10,
         status: null,
       },
+      commissionStatus,
     };
   },
   methods: {
@@ -116,11 +117,7 @@ export default {
       return this.formatAmount(cellValue);
     },
     formatTableeDate(row, column, cellValue) {
-      if (cellValue)
-        return this.$moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
-    },
-    getCommissionStatus() {
-      return commissionStatus;
+      if (cellValue) return formatDatetime(cellValue);
     },
     sizeChange(val) {
       this.pagination.limit = val;

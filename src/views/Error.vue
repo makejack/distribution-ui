@@ -18,7 +18,7 @@
           <el-input
             v-model="form.body"
             type="textarea"
-            :rows="2"
+            :rows="10"
             readonly
           ></el-input>
         </el-form-item>
@@ -26,7 +26,7 @@
           <el-input
             v-model="form.message"
             type="textarea"
-            :rows="2"
+            :rows="10"
             readonly
           ></el-input>
         </el-form-item>

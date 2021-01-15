@@ -15,6 +15,14 @@ export function orderGet(id) {
     })
 }
 
+export function orderEdit(data) {
+    return http({
+        url: 'api/v1/admin/order',
+        method: 'put',
+        data
+    })
+}
+
 export function orderDelete(id) {
     return http({
         url: 'api/v1/admin/order/' + id,

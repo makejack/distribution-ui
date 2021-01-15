@@ -7,10 +7,7 @@
         prop="commission"
         :formatter="formatTableAmount"
       ></el-table-column>
-      <el-table-column
-        label="比例 %"
-        prop="percentage"
-      ></el-table-column>
+      <el-table-column label="比例 %" prop="percentage"></el-table-column>
       <el-table-column
         label="状态"
         prop="status"
@@ -44,8 +41,7 @@
 
 <script>
 import { commissionHistory } from "../api/commission";
-import { commissionStatus } from "../utils/constant";
-import { formatCommissionStatus } from "../utils/format";
+import { formatCommissionStatus, formatDatetime } from "../utils/format";
 
 export default {
   name: "CommissionTable",
@@ -53,7 +49,7 @@ export default {
     customerId: {
       required: false,
       default: null,
-    }
+    },
   },
   data() {
     return {
@@ -79,11 +75,7 @@ export default {
       return this.formatAmount(cellValue);
     },
     formatTableeDate(row, column, cellValue) {
-      if (cellValue)
-        return this.$moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
-    },
-    getCommissionStatus() {
-      return commissionStatus;
+      return formatDatetime(cellValue);
     },
     sizeChange(val) {
       this.pagination.limit = val;
