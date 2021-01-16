@@ -3,7 +3,7 @@
     <div class="toolbar">
       <h2>{{ goodsId === 0 ? "新增商品" : "编辑商品" }}</h2>
       <div class="toolbar-btn">
-        <el-button type="primary" @click="saveGoodsHandler" :loading="disabled"
+        <el-button type="primary" @click="saveGoodsHandler"
           >保存</el-button
         >
         <el-button @click="returnGoodsList">返回</el-button>
@@ -23,6 +23,7 @@
           <el-form-item label="描述">
             <quill-editor
               ref="myQuillEditor"
+              v-loading="editorLoading"
               v-model="goods.description"
               :options="quillEditorOption"
               @change="onEditorChange($event)"
@@ -35,9 +36,19 @@
             >
               <el-button id="editImgUpload"></el-button>
             </el-upload>
+            <el-progress
+              v-if="editorLoading"
+              :percentage="editorUploadImgPercentage"
+            ></el-progress>
           </el-form-item>
           <el-form-item label="商品主图" prop="thumbnailImageId">
+            <el-progress
+              v-if="thumbnailImageVisible"
+              type="circle"
+              :percentage="thumbnailImagePercentage"
+            ></el-progress>
             <el-upload
+              v-if="!thumbnailImageVisible"
               class="avatar-uploader"
               action="#"
               :show-file-list="false"
@@ -59,6 +70,7 @@
               :file-list="goods.goodsMedias"
               :before-upload="beforetImageUpload"
               :on-preview="handlePictureCardPreview"
+              :on-remove="removeGoodsMedia"
               :http-request="uploadGoodsMedia"
             >
               <i class="el-icon-plus"></i>
@@ -235,7 +247,10 @@ export default {
     return {
       goodsId: 0,
       loading: false,
-      disabled: false,
+      thumbnailImageVisible: false,
+      thumbnailImagePercentage: 0,
+      editorLoading: false,
+      editorUploadImgPercentage: 0,
       dialogVisible: false,
       dialogImageUrl: "",
       activeName: "base",
@@ -317,37 +332,43 @@ export default {
     uploadThumbnailImage(file) {
       var formData = new FormData();
       formData.append("file", file.file);
-      this.loading = true;
-      uploadImg(formData)
+      this.thumbnailImagePercentage = 0;
+      this.thumbnailImageVisible = true;
+      uploadImg(formData, (progressEvent) => {
+        let num = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+        this.thumbnailImagePercentage = num;
+      })
         .then((res) => {
-          this.loading = false;
+          this.thumbnailImageVisible = false;
           if (res.code === 0) {
             this.goods.thumbnailImageId = res.data.id;
             this.goods.thumbnailImageUrl = res.data.url;
           }
         })
         .catch(() => {
-          this.loading = false;
+          this.thumbnailImageVisible = false;
           this.$message.error("请求失败");
         });
+    },
+    removeGoodsMedia(file) {
+      this.goods.goodsMediaIds = this.goods.goodsMediaIds.filter((id) => {
+        return id !== file.id;
+      });
     },
     uploadGoodsMedia(file) {
       var formData = new FormData();
       formData.append("file", file.file);
-      this.loading = true;
-      uploadImg(formData)
+      uploadImg(formData, (progressEvent) => {
+        let num = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+        file.onProgress({ percent: num });
+      })
         .then((res) => {
-          this.loading = false;
           if (res.code === 0) {
             this.goods.goodsMediaIds.push(res.data.id);
-
-            // res.data.url = "/api/" + res.data.url;
-
-            // this.goods.goodsMedias.push(res.data);
+            this.goods.goodsMedias.push(res.data);
           }
         })
         .catch(() => {
-          this.loading = false;
           this.$message.error("请求失败");
         });
     },
@@ -378,10 +399,14 @@ export default {
     uploadEditorImage(file) {
       var formData = new FormData();
       formData.append("file", file.file);
-      this.loading = true;
-      uploadImg(formData)
+      this.editorLoading = true;
+      this.editorUploadImgPercentage = 0;
+      uploadImg(formData, (progressEvent) => {
+        let num = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+        this.editorUploadImgPercentage = num;
+      })
         .then((res) => {
-          this.loading = false;
+          this.editorLoading = false;
           if (res.code === 0) {
             var addRanage = this.$refs.myQuillEditor.quill.getSelection();
             this.$refs.myQuillEditor.quill.insertEmbed(
@@ -392,7 +417,7 @@ export default {
           }
         })
         .catch(() => {
-          this.loading = false;
+          this.editorLoading = false;
           this.$message.error("请求失败");
         });
     },
@@ -536,7 +561,7 @@ export default {
     saveGoodsHandler() {
       this.$refs["baseForm"].validate((valid) => {
         if (valid) {
-          this.disabled = true;
+          this.loading = true;
 
           this.generateOptions();
           let maxPrice = 0;
@@ -551,7 +576,7 @@ export default {
           if (this.goodsId === 0) {
             goodsAdd(this.goods)
               .then((res) => {
-                this.disabled = false;
+                this.loading = false;
                 if (res.code === 0) {
                   this.$router.push({ name: "Goods" });
                 } else {
@@ -559,7 +584,8 @@ export default {
                 }
               })
               .catch(() => {
-                this.disabled = false;
+                this.precisionPrice();
+                this.loading = false;
               });
           } else {
             var params = {
@@ -568,7 +594,7 @@ export default {
             };
             goodsEdit(params)
               .then((res) => {
-                this.disabled = false;
+                this.loading = false;
                 if (res.code === 0) {
                   this.$router.push({ name: "Goods" });
                 } else {
@@ -576,7 +602,8 @@ export default {
                 }
               })
               .catch(() => {
-                this.disabled = false;
+                this.precisionPrice();
+                this.loading = false;
               });
           }
         }

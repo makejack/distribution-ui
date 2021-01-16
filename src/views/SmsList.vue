@@ -4,7 +4,6 @@
       <h2>短信日志</h2>
     </div>
     <el-table v-loading="loading" :data="tableData" border>
-      <el-table-column label="#" prop="id"></el-table-column>
       <el-table-column label="手机号" prop="tel"></el-table-column>
       <el-table-column label="Code" prop="code"></el-table-column>
       <el-table-column label="MsgId" prop="msgId"></el-table-column>

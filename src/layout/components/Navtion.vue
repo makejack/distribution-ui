@@ -1,5 +1,5 @@
 <template>
-  <el-menu router>
+  <el-menu router :default-active="activeMenu">
     <el-menu-item index="/">
       <i class="el-icon-s-home"></i>
       <span slot="title">首页</span>
@@ -83,5 +83,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    activeMenu() {
+      const { path } = this.$route;
+
+      return path;
+    },
+  },
+};
 </script>

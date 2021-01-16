@@ -14,7 +14,7 @@
             placeholder="订单状态"
           >
             <el-option
-              v-for="item in getOrderStatus()"
+              v-for="item in orderStatus"
               :key="item.id"
               :label="item.text"
               :value="item.id"
@@ -80,6 +80,13 @@
             >查看</el-button
           >
           <el-button
+            v-if="scope.row.orderStatus === 1"
+            type="text"
+            @click="cancelHandle(scope.row)"
+          >
+            取消
+          </el-button>
+          <el-button
             v-if="scope.row.orderStatus === 0 && visibleDelete"
             type="text"
             @click="deleteHandle(scope.row)"
@@ -104,7 +111,7 @@
 </template>
 
 <script>
-import { orderList, orderDelete } from "../api/order";
+import { orderList, orderDelete, orderCancel } from "../api/order";
 import { orderStatus } from "../utils/constant";
 import {
   formatPaymentType,
@@ -132,6 +139,7 @@ export default {
   },
   data() {
     return {
+      orderStatus,
       tableLoading: false,
       tableData: [],
       totalRows: 0,
@@ -162,11 +170,23 @@ export default {
     formatOrderStatus(row) {
       return formatOrderStatus(row.orderStatus);
     },
-    getOrderStatus() {
-      return orderStatus;
-    },
     viewOrderHandler(row) {
       this.$router.push({ name: "OrderInfo", params: { id: row.id } });
+    },
+    cancelHandle(row) {
+      this.$confirm("是否手动取消订单?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          orderCancel(row.id).then((res) => {
+            if (res.code === 0) {
+              this.loadOrderList();
+            }
+          });
+        })
+        .catch(() => {});
     },
     deleteHandle(row) {
       this.$confirm("是否删除无效的订单?", "提示", {

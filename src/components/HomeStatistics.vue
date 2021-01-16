@@ -1,30 +1,48 @@
 <template>
   <el-row :gutter="20">
-    <el-col :span="6">
+    <el-col :md="6" :xs="24" :sm="12">
       <el-card class="card" shadow="always">
         <div class="card-header">总销售额</div>
-        <h1 class="card-number">¥ {{ statistics.totalSales / 100 }}</h1>
+        <countTo
+          :startVal="0"
+          :endVal="totalSales"
+          prefix="¥"
+          separator=","
+          class="card-number"
+        />
       </el-card>
     </el-col>
 
-    <el-col :span="6">
+    <el-col :md="6" :xs="24" :sm="12">
       <el-card class="card" shadow="always">
         <div class="card-header">订单数</div>
-        <h1 class="card-number">{{ statistics.totalOrders }}</h1>
+        <countTo
+          :startVal="0"
+          :endVal="statistics.totalOrders"
+          class="card-number"
+        />
       </el-card>
     </el-col>
 
-    <el-col :span="6">
+    <el-col :md="6" :xs="24" :sm="12">
       <el-card class="card" shadow="always">
         <div class="card-header">待发货</div>
-        <h1 class="card-number">{{ statistics.pendingShipmentCount }}</h1>
+        <countTo
+          :startVal="0"
+          :endVal="statistics.pendingShipmentCount"
+          class="card-number"
+        />
       </el-card>
     </el-col>
 
-    <el-col :span="6">
+    <el-col :md="6" :xs="24" :sm="12">
       <el-card class="card" shadow="always">
         <div class="card-header">用户</div>
-        <h1 class="card-number">{{ statistics.totalCustomer }}</h1>
+        <countTo
+          :startVal="0"
+          :endVal="statistics.totalCustomer"
+          class="card-number"
+        />
       </el-card>
     </el-col>
   </el-row>
@@ -32,9 +50,11 @@
 
 <script>
 import { dataStatistics } from "../api/home";
+import countTo from "vue-count-to";
 
 export default {
   name: "HomeStatistics",
+  components: { countTo },
   data() {
     return {
       statistics: {
@@ -44,6 +64,11 @@ export default {
         totalCustomer: 0,
       },
     };
+  },
+  computed: {
+    totalSales() {
+      return this.statistics.totalSales / 100;
+    },
   },
   methods: {
     getDataStatistics() {
@@ -68,6 +93,8 @@ export default {
 
 .card-number {
   font-size: 30px;
+  font-weight: bold;
+  display: block;
   margin: 10px 0px;
 }
 </style>

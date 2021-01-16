@@ -11,11 +11,12 @@
         </template>
       </el-table-column>
       <el-table-column prop="customerName" label="买家名称"></el-table-column>
-      <el-table-column prop="goodsName" label="商品名称"></el-table-column>
-      <el-table-column
-        prop="normalizedName"
-        label="标准化名称"
-      ></el-table-column>
+      <el-table-column prop="goodsName" label="商品名称">
+        <template slot-scope="scope">
+          <p>{{ scope.row.goodsName }}</p>
+          <p>规格：{{ scope.row.normalizedName }}</p>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="discountAmount"
         label="商品价格"

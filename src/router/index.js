@@ -8,10 +8,11 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
     component: Layout,
+    redirect: '/home',
     children: [{
-      path: '',
+      path: '/home',
+      name: 'Home',
       component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
     }, {
       path: '/goods',

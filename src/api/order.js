@@ -23,6 +23,13 @@ export function orderEdit(data) {
     })
 }
 
+export function orderCancel(id) {
+    return http({
+        url: 'api/v1/admin/order/cancel/' + id,
+        method: 'put'
+    })
+}
+
 export function orderDelete(id) {
     return http({
         url: 'api/v1/admin/order/' + id,

@@ -181,6 +181,12 @@ export default {
       this.loadAddress();
     },
     handleClose() {
+      this.form.id = 0;
+      this.form.provinceName = "";
+      this.form.provinceCode = NaN;
+      this.form.cityName = "";
+      this.form.cityCode = NaN;
+      this.form.areaName = "";
       this.$refs.form.resetFields();
     },
     onSelected(data) {

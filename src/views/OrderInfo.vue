@@ -90,11 +90,12 @@
       </el-tab-pane>
       <el-tab-pane name="items" label="订单商品">
         <el-table :data="order.items" border>
-          <el-table-column label="商品名称" prop="goodsName"></el-table-column>
-          <el-table-column
-            label="标准化名称"
-            prop="normalizedName"
-          ></el-table-column>
+          <el-table-column label="商品名称" prop="goodsName">
+            <template slot-scope="scope">
+              <p>{{ scope.row.goodsName }}</p>
+              <p>规格：{{ scope.row.normalizedName }}</p>
+            </template>
+          </el-table-column>
           <el-table-column
             label="商品价格"
             prop="goodsPrice"
@@ -184,7 +185,7 @@
               :value="item.id"
             ></el-option>
           </el-select>
-        </el-form-item>        
+        </el-form-item>
       </el-form>
       <span slot="footer">
         <el-button @click="dialogVisible = false">取消</el-button>

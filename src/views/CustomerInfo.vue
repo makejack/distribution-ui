@@ -58,13 +58,13 @@
           </el-form-item>
           <el-form-item label="上次更新时间" prop="updateTime">
             <el-input
-              :value="formatDate(form.assets.updateTime)"
+              :value="formatDatetime(form.assets.updateTime)"
               readonly
             ></el-input>
           </el-form-item>
           <el-form-item label="创建时间" prop="createat">
             <el-input
-              :value="formatDate(form.assets.createat)"
+              :value="formatDatetime(form.assets.createat)"
               readonly
             ></el-input>
           </el-form-item>
