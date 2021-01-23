@@ -35,10 +35,36 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="总数量" prop="totalQuantity">
+        <el-form-item label="推荐佣金%" prop="referralCommissionRatio">
+          <el-input-number
+            v-model="form.referralCommissionRatio"
+            :min="0"
+          ></el-input-number>
+        </el-form-item>
+        <el-form-item label="回购佣金%" prop="repurchaseCommissionRatio">
+          <el-input-number
+            v-model="form.repurchaseCommissionRatio"
+            :min="0"
+          ></el-input-number>
+        </el-form-item>
+        <!-- <el-form-item label="总数量" prop="totalQuantity">
           <el-input-number
             :min="0"
             v-model="form.totalQuantity"
+          ></el-input-number>
+        </el-form-item> -->
+        <el-form-item label="原价" prop="originalPrice">
+          <el-input-number
+            :min="0"
+            :precision="2"
+            v-model="form.originalPrice"
+          ></el-input-number>
+        </el-form-item>
+        <el-form-item label="总金额" prop="totalAmount">
+          <el-input-number
+            :min="0"
+            :precision="2"
+            v-model="form.totalAmount"
           ></el-input-number>
         </el-form-item>
         <el-form-item label="商品" prop="goods">
@@ -53,7 +79,7 @@
               prop="thumbnailImageUrl"
             ></el-table-column> -->
             <el-table-column label="商品名称" prop="name"></el-table-column>
-            <el-table-column label="价格" prop="price">
+            <!-- <el-table-column label="价格" prop="price">
               <template slot-scope="scope">
                 <el-input-number
                   v-model="scope.row.price"
@@ -61,8 +87,8 @@
                   :precision="2"
                 ></el-input-number>
               </template>
-            </el-table-column>
-            <!-- <el-table-column label="数量" prop="quantity">
+            </el-table-column> -->
+            <el-table-column label="数量" prop="quantity">
               <template slot-scope="scope">
                 <el-input-number
                   v-model="scope.row.quantity"
@@ -70,7 +96,7 @@
                   :max="100"
                 ></el-input-number>
               </template>
-            </el-table-column> -->
+            </el-table-column>
             <el-table-column label="操作" width="80">
               <template slot-scope="scope">
                 <el-button
@@ -111,7 +137,11 @@ export default {
       }
     };
     const checkTotalQuantity = (rule, value, callback) => {
-      if (value == 0) return callback(new Error("总数量不能为0"));
+      if (value === 0) return callback(new Error("总数量不能为0"));
+      callback();
+    };
+    const checkTotalAmount = (rule, value, callback) => {
+      if (value === 0) return callback(new Error("总金额不能为0"));
       callback();
     };
     const checkGoods = (rule, value, callback) => {
@@ -131,7 +161,11 @@ export default {
         id: 0,
         partnerRole: undefined,
         applyType: 0,
+        referralCommissionRatio: 0,
+        repurchaseCommissionRatio: 0,
         totalQuantity: 0,
+        originalPrice: 0,
+        totalAmount: 0,
         goods: [
           //   {
           //     id: 0,
@@ -151,6 +185,20 @@ export default {
         totalQuantity: [
           { required: true, message: "请设置总数量", trigger: "blur" },
           { validator: checkTotalQuantity, trigger: "blur" },
+        ],
+        totalAmount: [
+          {
+            required: true,
+            message: "请设置总金额",
+            trigger: "blur",
+          },
+          { validator: checkTotalAmount, trigger: "blur" },
+        ],
+        referralCommissionRatio: [
+          { required: true, message: "请设置推荐佣金%", trigger: "blur" },
+        ],
+        repurchaseCommissionRatio: [
+          { required: true, message: "请设置回购佣金%", trigger: "blur" },
         ],
         goods: [{ validator: checkGoods, trigger: "blur" }],
       },
@@ -187,6 +235,8 @@ export default {
         if (valid) {
           this.loading = true;
 
+          this.form.totalAmount = this.form.totalAmount * 100;
+          this.form.originalPrice = this.form.originalPrice * 100;
           this.form.goods.forEach((item) => {
             item.price = item.price * 100;
           });
@@ -223,6 +273,8 @@ export default {
       });
     },
     changePricePrecision() {
+      this.form.totalAmount = this.form.totalAmount / 100;
+      this.form.originalPrice = this.form.originalPrice / 100;
       this.form.goods.forEach((item) => {
         item.price = item.price / 100;
       });

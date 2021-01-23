@@ -38,7 +38,6 @@
       </el-form>
     </div>
     <el-table v-loading="tableLoading" :data="tableData" border>
-      <el-table-column label="#" prop="id"></el-table-column>
       <el-table-column
         label="角色"
         prop="partnerRole"
@@ -49,7 +48,25 @@
         prop="applyType"
         :formatter="formatPartnerApplyTypes"
       ></el-table-column>
-      <el-table-column label="总数量" prop="totalQuantity"></el-table-column>
+      <!-- <el-table-column label="总数量" prop="totalQuantity"></el-table-column> -->
+      <el-table-column
+        label="原价"
+        prop="originalPrice"
+        :formatter="formatAmount"
+      ></el-table-column>
+      <el-table-column
+        label="总金额"
+        prop="totalAmount"
+        :formatter="formatAmount"
+      ></el-table-column>
+      <el-table-column
+        label="推荐佣金"
+        prop="referralCommissionRatio"
+      ></el-table-column>
+      <el-table-column
+        label="回购佣金"
+        prop="repurchaseCommissionRatio"
+      ></el-table-column>
       <el-table-column
         label="创建时间"
         prop="createat"
@@ -114,6 +131,9 @@ export default {
     },
     formatTableeDate(row, column, cellValue) {
       return formatDatetime(cellValue);
+    },
+    formatAmount(row, column, cellValue) {
+      return cellValue / 100;
     },
     sizeChange(val) {
       this.pagination.limit = val;

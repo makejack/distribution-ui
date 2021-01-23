@@ -17,10 +17,16 @@
           <el-form-item label="总费用">
             <el-input readonly :value="formatAmount(order.totalFee)"></el-input>
           </el-form-item>
-          <el-form-item label="优惠金额">
+          <el-form-item label="实付金额">
             <el-input
               readonly
-              :value="formatAmount(order.totalWithDiscount)"
+              :value="formatAmount(order.actuallyAmount)"
+            ></el-input
+          ></el-form-item>
+          <el-form-item label="抵扣金额">
+            <el-input
+              readonly
+              :value="formatAmount(order.walletAmount)"
             ></el-input
           ></el-form-item>
           <el-form-item label="订单状态">

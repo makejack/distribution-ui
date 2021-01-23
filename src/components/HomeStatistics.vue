@@ -6,6 +6,7 @@
         <countTo
           :startVal="0"
           :endVal="totalSales"
+          :decimals="2"
           prefix="¥"
           separator=","
           class="card-number"

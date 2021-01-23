@@ -35,7 +35,6 @@
       </el-form>
     </div>
     <el-table v-loading="tableLoading" :data="tableData" border>
-      <el-table-column label="#" prop="id"></el-table-column>
       <el-table-column label="头像" prop="customer.avatarUrl">
         <template slot-scope="scope">
           <el-avatar
@@ -50,11 +49,7 @@
         prop="commission"
         :formatter="formatTableAmount"
       ></el-table-column>
-      <el-table-column
-        label="比例"
-        prop="percentage"
-        :formatter="formatTableAmount"
-      ></el-table-column>
+      <el-table-column label="比例%" prop="percentage"></el-table-column>
       <el-table-column
         label="状态"
         prop="status"

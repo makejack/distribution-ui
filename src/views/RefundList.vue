@@ -2,12 +2,17 @@
   <div>
     <div class="toolbar">
       <h2>退款列表</h2>
+      <div class="toolbar-btn">
+        <el-button @click="loadRefundList" :loading="tableLoading"
+          >刷新</el-button
+        >
+      </div>
     </div>
 
     <el-table border :data="tableData" v-loading="tableLoading">
       <el-table-column prop="avatarUrl" label="#">
         <template slot-scope="scope">
-          <el-avatar size="large" v-model="scope.row.avatarUrl"></el-avatar>
+          <el-avatar size="large" :src="scope.row.avatarUrl"></el-avatar>
         </template>
       </el-table-column>
       <el-table-column prop="customerName" label="买家名称"></el-table-column>

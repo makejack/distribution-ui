@@ -49,8 +49,8 @@
         :formatter="formatRole"
       ></el-table-column>
       <!-- <el-table-column label="状态" prop="status"></el-table-column> -->
-      <el-table-column label="省份" prop="province"></el-table-column>
-      <el-table-column label="城市" prop="city"></el-table-column>
+      <!-- <el-table-column label="省份" prop="province"></el-table-column>
+      <el-table-column label="城市" prop="city"></el-table-column> -->
       <el-table-column
         label="创建时间"
         prop="createat"

@@ -2,9 +2,13 @@
   <div>
     <div class="toolbar">
       <h2>提现列表</h2>
+      <div class="toolbar-btn">
+        <el-button @click="loadWithdrawal" :loading="tableLoading"
+          >刷新</el-button
+        >
+      </div>
     </div>
     <el-table v-loading="tableLoading" :data="tableData" border>
-      <el-table-column label="#" prop="id"></el-table-column>
       <el-table-column label="头像" prop="customer.avatarUrl">
         <template slot-scope="scope">
           <el-avatar
@@ -21,7 +25,7 @@
       ></el-table-column>
       <el-table-column
         label="总金额"
-        prop="Total"
+        prop="total"
         :formatter="formatTableAmount"
       ></el-table-column>
       <el-table-column
@@ -34,9 +38,11 @@
         prop="handlingFee"
         :formatter="formatTableAmount"
       ></el-table-column>
-      <el-table-column label="是否成功" prop="isSuccess">
+      <el-table-column label="状态" prop="status">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.isSuccess" type="success">提现成功</el-tag>
+          <el-tag v-if="scope.row.status === 200" type="success"
+            >提现成功</el-tag
+          >
           <el-tag v-else type="danger">提现失败</el-tag>
         </template>
       </el-table-column>
@@ -67,7 +73,7 @@ import { withdrawalList } from "../api/withdrawal";
 import { formatDatetime } from "../utils/format";
 
 export default {
-  name: "Withdrawal",
+  name: "WithdrawalHistory",
   props: {
     customerId: {
       required: false,

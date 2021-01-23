@@ -21,6 +21,8 @@ export const paymentMethod = [{
     id: 1, text: '支付宝支付'
 }, {
     id: 2, text: 'POS'
+}, {
+    id: 3, text: '钱包余额'
 }]
 
 export const orderStatus = [{
@@ -77,6 +79,14 @@ export const refundStatus = [{
     id: 4, text: '退还商品'
 }, {
     id: 5, text: '完成退货'
+}]
+
+export const withdrawalStatus = [{
+    id: 0, text: '申请'
+}, {
+    id: 1, text: '失败'
+}, {
+    id: 200, text: '成功'
 }]
 
 export const courierCompanys = [

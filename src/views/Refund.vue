@@ -12,7 +12,7 @@
       <el-form-item label="商品主图">
         <el-avatar
           :size="100"
-          v-model="form.goodsMediaUrl"
+          :src="form.goodsMediaUrl"
           shape="square"
         ></el-avatar>
       </el-form-item>

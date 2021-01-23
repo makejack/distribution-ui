@@ -13,7 +13,7 @@ const routes = [
     children: [{
       path: '/home',
       name: 'Home',
-      component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+      component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
     }, {
       path: '/goods',
       name: 'Goods',
@@ -68,8 +68,12 @@ const routes = [
       component: () => import(/* webpackChunkName: "customerinfo" */ '../views/CustomerInfo.vue')
     }, {
       path: '/withdrawal',
-      name: 'Withdrawal',
-      component: () => import(/* webpackChunkName: "withdrawal" */ '../views/Withdrawal.vue')
+      name: 'WithdrawalHistory',
+      component: () => import(/* webpackChunkName: "withdrawalhistory" */ '../views/WithdrawalHistory.vue')
+    }, {
+      path: '/withdrawal/apply',
+      name: "WithdrawalApplyList",
+      component: () => import(/* webkpackChunkName: "withdrawalapplylist" */ '../views/WithdrawalApplyList.vue')
     }, {
       path: '/commission',
       name: 'Commission',

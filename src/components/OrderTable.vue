@@ -7,6 +7,13 @@
         :inline="true"
         label-width="120px"
       >
+        <el-form-item label="订单编号" prop="orderNo">
+          <el-input
+            v-model="pagination.orderNo"
+            clearable
+            placeholder="订单编号"
+          ></el-input>
+        </el-form-item>
         <el-form-item label="订单状态" prop="status">
           <el-select
             v-model="pagination.status"
@@ -32,17 +39,23 @@
       </el-form>
     </div>
     <el-table v-loading="tableLoading" :data="tableData" border>
+      <el-table-column label="#" prop="avatarUrl">
+        <template slot-scope="scope">
+          <el-avatar size="large" :src="scope.row.avatarUrl"></el-avatar>
+        </template>
+      </el-table-column>
+      <el-table-column label="用户" prop="nickName"></el-table-column>
       <el-table-column label="订单编号" prop="orderNo"></el-table-column>
       <el-table-column
         label="订单状态"
         prop="orderStatus"
         :formatter="formatOrderStatus"
       ></el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         label="支付类型"
         prop="paymentType"
         :formatter="formatPaymentType"
-      ></el-table-column>
+      ></el-table-column> -->
       <el-table-column
         label="支付方式"
         prop="paymentMethod"
@@ -54,8 +67,13 @@
         :formatter="formatTableAmount"
       ></el-table-column>
       <el-table-column
-        label="优惠金额"
-        prop="totalWithDiscount"
+        label="实付金额"
+        prop="actuallyAmount"
+        :formatter="formatTableAmount"
+      ></el-table-column>
+      <el-table-column
+        label="抵扣金额"
+        prop="walletAmount"
         :formatter="formatTableAmount"
       ></el-table-column>
       <el-table-column
@@ -148,6 +166,7 @@ export default {
         limit: 10,
         customerId: this.customerId,
         status: null,
+        orderNo: "",
       },
     };
   },

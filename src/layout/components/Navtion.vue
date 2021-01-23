@@ -42,8 +42,11 @@
         <i class="el-icon-tickets"></i>
         <span>记录管理</span>
       </template>
+      <el-menu-item index="/withdrawal/apply">
+        <span slot="title">提现申请</span>
+      </el-menu-item>
       <el-menu-item index="/withdrawal">
-        <span slot="title">提现</span>
+        <span slot="title">提现记录</span>
       </el-menu-item>
       <el-menu-item index="/commission">
         <span slot="title">佣金</span>
