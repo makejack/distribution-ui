@@ -139,7 +139,7 @@ export default {
         ],
         series: [
           {
-            name: "",
+            name: "销售额",
             type: "bar",
             barWidth: "60%",
             data: this.data,

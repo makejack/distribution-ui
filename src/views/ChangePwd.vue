@@ -3,7 +3,7 @@
     <div class="toolbar">
       <h2>修改密码</h2>
     </div>
-    <el-form :model="form" ref="form" :rules="rules">
+    <el-form :model="form" ref="form" :rules="rules" label-width="120px">
       <el-form-item label="旧密码" prop="oldPwd">
         <el-input v-model="form.oldPwd" type="password"></el-input>
       </el-form-item>

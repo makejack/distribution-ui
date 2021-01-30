@@ -23,6 +23,14 @@ export function refundApplyConfirm(data) {
     })
 }
 
+export function refundApplyRefuse(data) {
+    return http({
+        url: 'api/v1/admin/refund/refuse',
+        method: 'post',
+        data
+    })
+}
+
 export function refundConfirm(id) {
     return http({
         url: 'api/v1/admin/refund/' + id,

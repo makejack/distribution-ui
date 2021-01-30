@@ -3,9 +3,7 @@
     <div class="toolbar">
       <h2>{{ goodsId === 0 ? "新增商品" : "编辑商品" }}</h2>
       <div class="toolbar-btn">
-        <el-button type="primary" @click="saveGoodsHandler"
-          >保存</el-button
-        >
+        <el-button type="primary" @click="saveGoodsHandler">保存</el-button>
         <el-button @click="returnGoodsList">返回</el-button>
       </div>
     </div>
@@ -20,26 +18,8 @@
           <el-form-item label="商品名称" prop="name">
             <el-input v-model="goods.name" placeholder="商品名称"></el-input>
           </el-form-item>
-          <el-form-item label="描述">
-            <quill-editor
-              ref="myQuillEditor"
-              v-loading="editorLoading"
-              v-model="goods.description"
-              :options="quillEditorOption"
-              @change="onEditorChange($event)"
-            />
-            <el-upload
-              action="#"
-              :before-upload="beforetImageUpload"
-              :http-request="uploadEditorImage"
-              style="display: none"
-            >
-              <el-button id="editImgUpload"></el-button>
-            </el-upload>
-            <el-progress
-              v-if="editorLoading"
-              :percentage="editorUploadImgPercentage"
-            ></el-progress>
+          <el-form-item label="描述" prop="description">
+            <quill-editor v-model="goods.description" />
           </el-form-item>
           <el-form-item label="商品主图" prop="thumbnailImageId">
             <el-progress
@@ -228,10 +208,7 @@
 </template>
 
 <script>
-import "quill/dist/quill.core.css"; // import styles
-import "quill/dist/quill.snow.css"; // for snow theme
-import "quill/dist/quill.bubble.css"; // for bubble theme
-import { quillEditor } from "vue-quill-editor";
+import QuillEditor from '../components/QuillEditor';
 import http from "../utils/http";
 import { uploadImg } from "@/api/media";
 import { goodsAdd, goodsGet, goodsEdit } from "../api/goods";
@@ -241,7 +218,7 @@ import { goodsOptionDataAll } from "@/api/goodsoptiondata";
 export default {
   name: "GoodsInfo",
   components: {
-    quillEditor,
+    QuillEditor,
   },
   data() {
     return {
@@ -249,27 +226,9 @@ export default {
       loading: false,
       thumbnailImageVisible: false,
       thumbnailImagePercentage: 0,
-      editorLoading: false,
-      editorUploadImgPercentage: 0,
       dialogVisible: false,
       dialogImageUrl: "",
       activeName: "base",
-      quillEditorOption: {
-        placeholder: "请输入内容",
-        modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike"], //加粗，斜体，下划线，删除线
-            [{ header: 1 }, { header: 2 }], // 标题，键值对的形式；1、2表示字体大小
-            [{ list: "ordered" }, { list: "bullet" }], //列表
-            [{ indent: "-1" }, { indent: "+1" }], // 缩进
-            [{ direction: "rtl" }], // 文本方向
-            [{ header: [1, 2, 3, 4, 5, 6, false] }], //几级标题
-            [{ color: [] }, { background: [] }], // 字体颜色，字体背景颜色
-            [{ align: [] }], //对齐方式
-            ["image"], //上传图片、上传视频
-          ],
-        },
-      },
       goodsOptions: [],
       selectGoodsOptionId: "",
       tableGoodsOptions: [
@@ -326,9 +285,6 @@ export default {
     };
   },
   methods: {
-    onEditorChange({ html }) {
-      this.goods.description = html;
-    },
     uploadThumbnailImage(file) {
       var formData = new FormData();
       formData.append("file", file.file);
@@ -389,37 +345,6 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
-    },
-    imageHandler(state) {
-      if (state) {
-        let fileInput = document.getElementById("editImgUpload");
-        fileInput.click();
-      }
-    },
-    uploadEditorImage(file) {
-      var formData = new FormData();
-      formData.append("file", file.file);
-      this.editorLoading = true;
-      this.editorUploadImgPercentage = 0;
-      uploadImg(formData, (progressEvent) => {
-        let num = ((progressEvent.loaded / progressEvent.total) * 100) | 0;
-        this.editorUploadImgPercentage = num;
-      })
-        .then((res) => {
-          this.editorLoading = false;
-          if (res.code === 0) {
-            var addRanage = this.$refs.myQuillEditor.quill.getSelection();
-            this.$refs.myQuillEditor.quill.insertEmbed(
-              addRanage !== null ? addRanage.index : 0,
-              "image",
-              res.data.url
-            ); // 调用编辑器的 insertEmbed 方法，插入URL
-          }
-        })
-        .catch(() => {
-          this.editorLoading = false;
-          this.$message.error("请求失败");
-        });
     },
     // 商品选项
     addGoodsOption() {
@@ -619,61 +544,51 @@ export default {
     },
   },
   mounted() {
-    this.$refs.myQuillEditor.quill
-      .getModule("toolbar")
-      .addHandler("image", this.imageHandler);
-
-    var allRequests = [goodsOptionAll(), goodsOptionDataAll()];
-    if (this.goodsId > 0) {
-      allRequests = [
-        goodsOptionAll(),
-        goodsOptionDataAll(),
-        goodsGet(this.goodsId),
-      ];
-    }
     this.loading = true;
-    http.all(allRequests).then(
-      http.spread((option, optionData, goods) => {
-        if (option.code === 0) {
-          this.goodsOptions = option.data;
-        }
-        if (optionData.code === 0) {
-          this.goodsOptionData = optionData.data;
-        }
-        if (goods) {
-          if (goods.code === 0) {
-            this.goods = goods.data;
-            var goodsMediaIds = [];
-            this.goods.goodsMedias.forEach((item) => {
-              goodsMediaIds.push(item.id);
-            });
-            this.$set(this.goods, "goodsMediaIds", goodsMediaIds);
-
-            // 修改价格
-            this.precisionPrice();
-
-            // {
-            //   id: 0,
-            //   name: "",
-            //   values: [],
-            // },
-            this.goods.options.forEach((o) => {
-              var values = [];
-              o.values.forEach((v) => {
-                values.push(v.value);
-              });
-              var option = {
-                id: o.id,
-                name: o.name,
-                values: values,
-              };
-              this.tableGoodsOptions.push(option);
-            });
+    http
+      .all([goodsOptionAll(), goodsOptionDataAll(), goodsGet(this.goodsId)])
+      .then(
+        http.spread((option, optionData, goods) => {
+          if (option.code === 0) {
+            this.goodsOptions = option.data;
           }
-        }
-        this.loading = false;
-      })
-    );
+          if (optionData.code === 0) {
+            this.goodsOptionData = optionData.data;
+          }
+          if (goods) {
+            if (goods.code === 0) {
+              this.goods = goods.data;
+              var goodsMediaIds = [];
+              this.goods.goodsMedias.forEach((item) => {
+                goodsMediaIds.push(item.id);
+              });
+              this.$set(this.goods, "goodsMediaIds", goodsMediaIds);
+
+              // 修改价格
+              this.precisionPrice();
+
+              // {
+              //   id: 0,
+              //   name: "",
+              //   values: [],
+              // },
+              this.goods.options.forEach((o) => {
+                var values = [];
+                o.values.forEach((v) => {
+                  values.push(v.value);
+                });
+                var option = {
+                  id: o.id,
+                  name: o.name,
+                  values: values,
+                };
+                this.tableGoodsOptions.push(option);
+              });
+            }
+          }
+          this.loading = false;
+        })
+      );
   },
   created() {
     if (this.$route.query.id) {

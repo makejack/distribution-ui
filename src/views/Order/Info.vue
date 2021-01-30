@@ -116,13 +116,8 @@
           <el-table-column label="数量" prop="quantity"></el-table-column>
           <el-table-column
             label="发货状态"
-            prop="shippingStatus"
-            :formatter="formatShippingStatus"
-          ></el-table-column>
-          <el-table-column
-            label="发货时间"
-            prop="shippingTime"
-            :formatter="formatCreateDate"
+            prop="status"
+            :formatter="formatOrderItemStatus"
           ></el-table-column>
           <el-table-column
             label="完成时间"
@@ -204,16 +199,16 @@
 </template>
 
 <script>
-import { orderGet, orderEdit } from "../api/order";
-import { orderBillingConfirm } from "../api/orderBilling";
-import { paymentMethod, paymentType } from "../utils/constant";
+import { orderGet, orderEdit } from "@/api/order";
+import { orderBillingConfirm } from "@/api/orderBilling";
+import { paymentMethod, paymentType } from "@/utils/constant";
 import {
   formatPaymentType,
   formatPaymentMethod,
   formatOrderStatus,
-  formatShippingStatus,
+  formatOrderItemStatus,
   formatDatetime,
-} from "../utils/format";
+} from "@/utils/format";
 
 export default {
   name: "OrderInfo",
@@ -249,8 +244,8 @@ export default {
     formatAmount(value) {
       return value / 100;
     },
-    formatShippingStatus(row, column, cellvalue) {
-      return formatShippingStatus(cellvalue);
+    formatOrderItemStatus(row, column, cellvalue) {
+      return formatOrderItemStatus(cellvalue);
     },
     editHandle() {
       this.form = {

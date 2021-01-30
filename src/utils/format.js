@@ -8,7 +8,7 @@ import {
     partnerApplyTypes,
     commissionStatus,
     employeeRoles,
-    refundStatus
+    orderItemStatus
 } from './constant'
 
 export function formatPaymentType(value) {
@@ -43,8 +43,8 @@ export function formatTemployeeRole(value) {
     return getConstantText(value, employeeRoles)
 }
 
-export function formatRefundStatus(value) {
-    return getConstantText(value, refundStatus)
+export function formatOrderItemStatus(value) {
+    return getConstantText(value, orderItemStatus)
 }
 
 export function formatDatetime(value) {

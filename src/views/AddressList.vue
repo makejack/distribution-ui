@@ -231,7 +231,6 @@ export default {
         areaName: row.areaName,
         detailInfo: row.detailInfo,
       };
-      console.log(this.form);
       this.dialogVisible = true;
     },
     deleteHandle(row) {

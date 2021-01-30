@@ -68,7 +68,7 @@
             placeholder="手机号码"
           ></el-input>
         </el-form-item>
-        <el-form-item label="角色" prop="role">
+        <el-form-item v-if="!form.isAdmin" label="角色" prop="role">
           <el-select v-model="form.role" placeholder="请选择角色">
             <el-option
               v-for="(item, index) in employeeRoles"
@@ -122,6 +122,7 @@ export default {
         nickName: "",
         pwd: "",
         role: 0,
+        isAdmin: false,
         tel: "",
       },
       rules: {
@@ -159,6 +160,7 @@ export default {
       return this.$moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
     },
     formaTemployeeRole(row, column, cellValue) {
+      if (row.isAdmin) return "超级管理员";
       return formatTemployeeRole(cellValue);
     },
     addEmployee() {
@@ -170,6 +172,7 @@ export default {
         name: row.name,
         nickName: row.nickName,
         role: row.role,
+        isAdmin: row.isAdmin,
         tel: row.tel,
       };
 

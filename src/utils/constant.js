@@ -62,13 +62,15 @@ export const employeeRoles = [{
 }, {
     id: 1, text: '账务'
 }, {
-    id: 2, text: '开发人员'
+    id: 2, text: '开发'
 }, {
-    id: 3, text: '售后人员'
+    id: 3, text: '仓库管理员'
+}, {
+    id: 4, text: '商品管理员'
 }]
 
-export const refundStatus = [{
-    id: 0, text: '无'
+export const orderItemStatus = [{
+    id: 0, text: '暂存'
 }, {
     id: 1, text: '申请失败'
 }, {
@@ -79,6 +81,12 @@ export const refundStatus = [{
     id: 4, text: '退还商品'
 }, {
     id: 5, text: '完成退货'
+}, {
+    id: 100, text: '等待发货'
+}, {
+    id: 101, text: '已出货'
+}, {
+    id: 200, text: '完成'
 }]
 
 export const withdrawalStatus = [{

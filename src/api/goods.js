@@ -1,4 +1,5 @@
 import http from '@/utils/http'
+import { promiseRequest } from '../utils'
 
 export function goodsList(params) {
     return http({
@@ -9,10 +10,12 @@ export function goodsList(params) {
 }
 
 export function goodsGet(id) {
-    return http({
-        url: 'api/v1/admin/goods/' + id,
-        method: 'get'
-    })
+    if (id)
+       return promiseRequest(
+            http({
+                url: 'api/v1/admin/goods/' + id,
+                method: 'get'
+            }))
 }
 
 export function goodsAdd(data) {

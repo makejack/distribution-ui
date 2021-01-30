@@ -30,6 +30,9 @@ body,
 .text-danger {
   color: #f5222d;
 }
+.text-center {
+  text-align: center;
+}
 .card {
   margin-bottom: 20px;
 }

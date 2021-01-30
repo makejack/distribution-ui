@@ -32,6 +32,11 @@
               >登 录</el-button
             >
           </el-form-item>
+          <div class="text-center w-100">
+            <el-link type="primary" :underline="false" href="#/forget"
+              >找回密码</el-link
+            >
+          </div>
         </el-form>
       </div>
     </div>
@@ -61,6 +66,7 @@ export default {
     ...mapActions({
       setToken: "user/set_token",
       setUser: "user/set_userinfo",
+      setRoutes: "permission/generate_routes",
     }),
     login() {
       this.$refs["form"].validate((valid) => {
@@ -72,6 +78,7 @@ export default {
             if (res.code == 0) {
               this.setToken(res.data.jwtToken);
               this.setUser(res.data.user);
+              this.setRoutes(res.data.user.role);
               this.$router.push({ name: "Home" });
             }
           })

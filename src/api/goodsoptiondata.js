@@ -1,10 +1,12 @@
 import http from '@/utils/http'
+import { promiseRequest } from '../utils'
 
 export function goodsOptionDataAll() {
-    return http({
-        url: 'api/v1/admin/goods/optiondata/all',
-        method: 'get'
-    })
+    return promiseRequest(
+        http({
+            url: 'api/v1/admin/goods/optiondata/all',
+            method: 'get'
+        }))
 }
 export function goodsOptionDataList(params) {
     return http({

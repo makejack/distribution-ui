@@ -16,39 +16,26 @@
         </template>
       </el-table-column>
       <el-table-column prop="customerName" label="买家名称"></el-table-column>
-      <el-table-column prop="goodsName" label="商品名称">
-        <template slot-scope="scope">
-          <p>{{ scope.row.goodsName }}</p>
-          <p>规格：{{ scope.row.normalizedName }}</p>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="discountAmount"
-        label="商品价格"
-        :formatter="formatAmount"
-      >
-      </el-table-column>
       <el-table-column
         prop="refundAmount"
         label="退款金额"
         :formatter="formatAmount"
       ></el-table-column>
       <el-table-column
-        prop="refundStatus"
+        prop="status"
         label="退款状态"
         :formatter="formatRefundStatus"
       ></el-table-column>
       <el-table-column
-        prop="refundApplyTime"
+        prop="createat"
         label="申请时间"
         :formatter="formatDate"
       ></el-table-column>
       <el-table-column
-        prop="refundTime"
-        label="退款时间"
+        prop="auditTime"
+        label="处理时间"
         :formatter="formatDate"
-      >
-      </el-table-column>
+      ></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="viewHandle(scope.row)"
@@ -74,7 +61,7 @@
 
 <script>
 import { refundList } from "../api/refund";
-import { formatRefundStatus, formatDatetime } from "../utils/format";
+import { formatOrderItemStatus, formatDatetime } from "../utils/format";
 
 export default {
   name: "RefundList",
@@ -99,7 +86,7 @@ export default {
       return cellValue / 100;
     },
     formatRefundStatus(row, column, cellValue) {
-      return formatRefundStatus(cellValue);
+      return formatOrderItemStatus(cellValue);
     },
     sizeChange(val) {
       this.pagination.limit = val;

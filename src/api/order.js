@@ -1,4 +1,5 @@
 import http from '../utils/http'
+import { promiseRequest } from '../utils'
 
 export function orderList(params) {
     return http({
@@ -13,6 +14,16 @@ export function orderGet(id) {
         url: 'api/v1/admin/order/' + id,
         method: 'get'
     })
+}
+
+export function orderAdd(data) {
+    return promiseRequest(
+        http({
+            url: 'api/v1/admin/order',
+            method: 'post',
+            data
+        })
+    )
 }
 
 export function orderEdit(data) {
