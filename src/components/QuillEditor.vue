@@ -13,7 +13,7 @@
       :http-request="uploadEditorImage"
       style="display: none"
     >
-      <el-button :id="btnName"></el-button>
+      <button ref="uploadBtn"></button>
     </el-upload>
     <el-progress
       v-if="editorLoading"
@@ -50,7 +50,6 @@ export default {
   },
   data() {
     return {
-      btnName: "editImgUpload",
       content: this.value,
       editorLoading: false,
       editorUploadImgPercentage: 0,
@@ -78,8 +77,8 @@ export default {
     },
     imageHandler(state) {
       if (state) {
-        let fileInput = document.getElementById(this.btnName);
-        fileInput.click();
+        let btn = this.$refs.uploadBtn;
+        btn.click();
       }
     },
     beforetImageUpload(file) {
@@ -123,8 +122,6 @@ export default {
     },
   },
   mounted() {
-    this.btnName = this.btnName + Math.random();
-
     this.$refs["myQuillEditor"].quill
       .getModule("toolbar")
       .addHandler("image", this.imageHandler);

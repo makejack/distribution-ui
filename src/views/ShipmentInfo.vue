@@ -22,9 +22,6 @@
           <el-form-item label="快递公司" prop="courierCompany">
             <el-input v-model="shipment.courierCompany" readonly></el-input>
           </el-form-item>
-          <el-form-item label="快递公司Code" prop="courierCompanyCode">
-            <el-input v-model="shipment.courierCompanyCode" readonly></el-input>
-          </el-form-item>
           <el-form-item label="快递单号" prop="trackingNumber">
             <el-col :span="12"
               ><el-input v-model="shipment.trackingNumber" readonly></el-input

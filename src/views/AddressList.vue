@@ -181,13 +181,10 @@ export default {
       this.loadAddress();
     },
     handleClose() {
-      this.form.id = 0;
-      this.form.provinceName = "";
-      this.form.provinceCode = NaN;
-      this.form.cityName = "";
-      this.form.cityCode = NaN;
-      this.form.areaName = "";
-      this.$refs.form.resetFields();
+      this.form = {
+        id: 0,
+      };
+      // this.$refs.form.resetFields();
     },
     onSelected(data) {
       this.form.provinceCode = parseInt(data.province.code);
@@ -217,20 +214,21 @@ export default {
       this.dialogVisible = true;
     },
     editHandle(row) {
-      this.form = {
-        id: row.id,
-        isDefault: row.isDefault,
-        userName: row.userName,
-        telNumber: row.telNumber,
-        postalCode: row.postalCode,
-        provinceCode: row.provinceCode,
-        cityCode: row.cityCode,
-        areaCode: row.areaCode,
-        provinceName: row.provinceName,
-        cityName: row.cityName,
-        areaName: row.areaName,
-        detailInfo: row.detailInfo,
-      };
+      this.form = JSON.parse(JSON.stringify(row));
+      // this.form = {
+      //   id: row.id,
+      //   isDefault: row.isDefault,
+      //   userName: row.userName,
+      //   telNumber: row.telNumber,
+      //   postalCode: row.postalCode,
+      //   provinceCode: row.provinceCode,
+      //   cityCode: row.cityCode,
+      //   areaCode: row.areaCode,
+      //   provinceName: row.provinceName,
+      //   cityName: row.cityName,
+      //   areaName: row.areaName,
+      //   detailInfo: row.detailInfo,
+      // };
       this.dialogVisible = true;
     },
     deleteHandle(row) {

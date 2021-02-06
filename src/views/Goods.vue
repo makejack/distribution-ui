@@ -35,14 +35,15 @@
     </div>
 
     <el-table border :data="tableData" v-loading="tableLoading">
-      <el-table-column prop="displayOrder" label="排序"></el-table-column>
+      <el-table-column prop="displayOrder" label="排序" width="80px"></el-table-column>
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column
         prop="price"
         label="价格"
         :formatter="priceFormat"
+         width="100px"
       ></el-table-column>
-      <el-table-column prop="isPublished" label="是否发布">
+      <el-table-column prop="isPublished" label="是否发布" width="100px">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.isPublished" type="primary">已发布</el-tag>
           <el-tag v-else type="info">未发布</el-tag>

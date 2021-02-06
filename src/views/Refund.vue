@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <div class="toolbar">
       <h2>退款详情</h2>
       <div class="toolbar-btn">
@@ -37,7 +37,7 @@
       <div slot="header">
         <span>详情</span>
       </div>
-      <el-form v-loading="loading" :model="form" ref="form" label-width="120px">
+      <el-form :model="form" ref="form" label-width="120px">
         <el-form-item label="装货编号">
           {{ form.shipmentId }}
           <el-button type="text" @click="viewShipment">查看</el-button>
@@ -59,7 +59,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="退款原因">
-          <el-input v-model="form.refundReason" readonly></el-input>
+          <el-input v-model="form.reason" readonly></el-input>
         </el-form-item>
         <el-form-item label="描述">
           <el-input v-model="form.description" readonly></el-input>
@@ -279,6 +279,8 @@ export default {
                   message: "操作成功",
                   type: "success",
                 });
+
+                this.form.status = 3;
               }
             })
             .catch(() => {
@@ -303,8 +305,10 @@ export default {
         });
     },
     refuseHandle() {
+      this.loading = true;
       this.$refs.refuseForm.validate((valid) => {
         if (valid) {
+          this.loading = false;
           refundApplyRefuse(this.refuseForm)
             .then((res) => {
               if (res.code === 0) {
@@ -314,7 +318,9 @@ export default {
                 });
               }
             })
-            .catch(() => {});
+            .catch(() => {
+              this.loading = false;
+            });
         }
       });
     },
@@ -325,8 +331,10 @@ export default {
         type: "warning",
       })
         .then(() => {
+          this.loading = true;
           refundConfirm(this.dialogForm.id).then((res) => {
             if (res.code === 0) {
+              this.loading = false;
               this.$message({
                 type: "success",
                 message: "确认成功，退款到用户钱包中。",
@@ -336,7 +344,9 @@ export default {
             }
           });
         })
-        .catch(() => {});
+        .catch(() => {
+          this.loading = false;
+        });
     },
     returnHandle() {
       this.$router.push({ name: "RefundList" });

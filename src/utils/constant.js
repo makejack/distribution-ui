@@ -32,6 +32,8 @@ export const orderStatus = [{
 }, {
     id: 2, text: "支付失败"
 }, {
+    id: 3, text: "已关闭"
+}, {
     id: 100, text: "已付款"
 }, {
     id: 200, text: "完成"

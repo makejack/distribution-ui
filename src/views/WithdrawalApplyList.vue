@@ -34,6 +34,11 @@
         :formatter="formatTableAmount"
       ></el-table-column>
       <el-table-column
+        label="保留金额"
+        prop="reservedAmount"
+        :formatter="formatTableAmount"
+      ></el-table-column>
+      <el-table-column
         label="手续费"
         prop="handlingFee"
         :formatter="formatTableAmount"

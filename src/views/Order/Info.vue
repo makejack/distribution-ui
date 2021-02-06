@@ -106,25 +106,32 @@
             label="商品价格"
             prop="goodsPrice"
             :formatter="formatTableAmount"
+            width="100px"
           ></el-table-column>
           <el-table-column
             label="优惠价格"
             prop="discountAmount"
             :formatter="formatTableAmount"
+            width="100px"
           ></el-table-column>
           <!-- <el-table-column label="商品地址" prop="goodsMediaUrl"></el-table-column> -->
-          <el-table-column label="数量" prop="quantity"></el-table-column>
+          <el-table-column
+            label="数量"
+            prop="quantity"
+            width="80px"
+          ></el-table-column>
           <el-table-column
             label="发货状态"
             prop="status"
             :formatter="formatOrderItemStatus"
+            width="100px"
           ></el-table-column>
+          <el-table-column label="备注" prop="remarks"></el-table-column>
           <el-table-column
             label="完成时间"
             prop="completeTime"
             :formatter="formatCreateDate"
           ></el-table-column>
-          <el-table-column label="备注" prop="remarks"></el-table-column>
           <el-table-column
             label="创建时间"
             prop="createat"

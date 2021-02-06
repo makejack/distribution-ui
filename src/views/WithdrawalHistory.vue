@@ -24,13 +24,18 @@
         prop="customer.phoneNumber"
       ></el-table-column>
       <el-table-column
-        label="总金额"
+        label="提现金额"
         prop="total"
         :formatter="formatTableAmount"
       ></el-table-column>
       <el-table-column
-        label="提现金额"
+        label="现金金额"
         prop="amount"
+        :formatter="formatTableAmount"
+      ></el-table-column>
+      <el-table-column
+        label="复购金额"
+        prop="reservedAmount"
         :formatter="formatTableAmount"
       ></el-table-column>
       <el-table-column
@@ -47,6 +52,7 @@
         </template>
       </el-table-column>
       <el-table-column label="消息" prop="message"></el-table-column>
+      <el-table-column label="描述" prop="description"></el-table-column>
       <el-table-column
         label="创建时间"
         prop="createat"
